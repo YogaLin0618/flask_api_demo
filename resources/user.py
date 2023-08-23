@@ -4,6 +4,10 @@ import pymysql
 import traceback
 from server import db
 from models import UserModel
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 parser = reqparse.RequestParser()
 parser.add_argument('name')
@@ -16,7 +20,7 @@ class User(Resource):
     
     # 串接 MySQL DB
     def db_init(self):
-        db = pymysql.connect(host='localhost', user='root', password='password', database='api')
+        db = pymysql.connect(host=os.getenv('DB_HOST'), user=os.getenv('DB_USER'), password=os.getenv('DB_PASSWORD'), database=os.getenv('DB_SCHEMA'))
         cursor = db.cursor(pymysql.cursors.DictCursor)
         
         return db, cursor
