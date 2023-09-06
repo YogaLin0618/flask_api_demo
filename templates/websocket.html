@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>聊天室</title>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js" integrity="sha512-Xm9qbB6Pu06k3PUwPj785dyTl6oHxgsv9nHp7ej7nCpAqGZT3OZpsELuCYX05DdonFpTlBpXMOxjavIAIUwr0w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function(){
+        var socket = io.connect()
+        socket.on('chatting', function(msg){
+            var date = new Date()
+            $('#message').append('<p>對方傳來' + msg.message + ' 時間' + date + '</p>')
+        })
+        $('#send').on('click', function(){
+            socket.emit('chatting', {message: $('#data').val()})
+        })
+    })
+</script>
+</head>
+<body>
+    <input id="data"></input>
+    <input type="button" id="send" value="送出">
+    <dev id="message"></div>
+</body>
+</html>
